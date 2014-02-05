@@ -1,0 +1,5 @@
+import csv
+
+reader = csv.reader(open("/home/xiaoyu/protein/SNP/Homo.vcf"))
+for chromosome, position in reader:
+    print position
