@@ -1,0 +1,28 @@
+import os
+import re
+import string
+
+#For the function of construct, we pass one directory into this fun
+#and then extract one big array of LCR array that contain all the LCR
+#positions.
+def construct_LCR(directory, size=5000):
+    all_LCR = []
+    inputfile = open(directory, "r")
+    pattern = re.compile(">GeneInformation:(.*)@Chromosome:(\S+)@Strand:(.*)#@LCRpos:(\S+)#@LCR_SNP:")
+    for line in inputfile:
+        line = string.strip(line)
+        match = pattern.match(line)
+        if match != None:
+            LCRs_string = match.group(4)
+            chromosome = match.group(2)
+
+            LCRs_raw_array = LCRs_string.split("#")            
+            for LCR in LCRs_raw_array:
+                array = LCR.split(",")
+                array.append(chromosome)
+                all_LCR.append(array)
+    return all_LCR
+
+#This is for test of the code:
+LCR = construct_LCR("/home/xiaoyu/protein/all_gene/result/Homo.withintronSNP", 100) 
+print LCR

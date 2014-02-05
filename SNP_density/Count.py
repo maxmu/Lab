@@ -1,0 +1,59 @@
+import re 
+import string
+
+#First part of the program is for count the total number and return
+#all the names of the genes as an array
+def all_genes():
+    #return values:
+    count = 0
+    gene_name_array = []
+    #body:
+    pattern = re.compile(">(\S+)\|chr:(\S+)\|strand")
+    inputfile = open("/home/xiaoyu/protein/all_gene/after_seg/block_total", "r")
+    for line in inputfile:
+        line = string.strip(line)
+        match = pattern.match(line)
+        if match != None:
+            gene_name =  match.group(1)
+            gene_name_array.append(gene_name)
+            count += 1
+    print count
+    return gene_name_array
+
+#Second part of the program is for count the genes that have LCR and 
+#return the names of the genes as an array
+def LCR_genes():
+    #return values:
+    count = 0
+    gene_name_array = []
+    #body:
+    pattern = re.compile(">(.*)@GeneName:(\S+)@Chromosome:")
+    inputfile = open("/home/xiaoyu/protein/all_gene/after_seg/LCR_information_file_total", "r")
+    for line in inputfile:
+        line = string.strip(line)
+        match = pattern.match(line)
+        if match != None:
+            gene_name =  match.group(2)
+            gene_name_array.append(gene_name)
+            count += 1
+    print count
+    return gene_name_array
+            
+#OK, I will use the all_genes and LCR_genes to construct the array
+#of genes that do not have the LCR and return the count of it.
+def not_own_LCR_genes():
+    #return values:
+    gene_name_array = []
+    #body:
+    all = all_genes()
+    LCR = LCR_genes()
+    
+    for name in all:
+        if not name in LCR:
+            gene_name_array.append(name)
+        else:
+            continue
+
+    print len(gene_name_array)
+    return gene_name_array
+

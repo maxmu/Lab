@@ -1,0 +1,15 @@
+import re
+import string
+import os
+import random
+
+
+directory = "/home/xiaoyu/protein/all_gene/result/simulation_gene_based/"
+gene_inputfile = open("/home/xiaoyu/protein/all_gene/result/Homo.withintronSNP", "r")
+pattern = re.compile(">GeneInformation:(.*)@GeneName:(\S+)@Chromosome:(\S+)@Strand:(\S+)@CDExons:(\S+)#@LCRpos:(\S+)#@LCR_SNP:(\S+)")
+
+for line in gene_inputfile:
+    line = string.strip(line)
+    match = pattern.match(line)
+    if match != None:
+        print match.group(2)

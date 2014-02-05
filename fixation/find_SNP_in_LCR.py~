@@ -1,0 +1,57 @@
+import re
+import string
+
+species = ["Homo", "Gorilla", "Pan_paniscus", "Pan_troglodytes", "Pongo_abelii", "Pongo_pygmaeus"]
+inputfile = open("/home/xiaoyu/protein/all_gene/after_seg/LCR_information_file_new", "r") 
+
+
+for specie in species:
+
+    inputfile2 = open("/home/xiaoyu/protein/SNP/" + specie + ".vcf", "r")
+    pattern2 = re.compile("chr(10|20)(\s+)(\S+)(\s+)\.")
+    SNP = {}
+    for line in inputfile2:
+        line = string.strip(line)
+        match2 = pattern2.match(line)
+        if match2 != None:
+            chromosome = match2.group(1)
+            position = match2.group(3)
+            if chromosome in SNP.keys():
+                SNP[chromosome].append(position)
+            else:
+                SNP[chromosome] = []
+                SNP[chromosome].append(position)
+
+    inputfile2.close()
+    length = 0
+    cnt = 0
+
+    pattern = re.compile(">GeneInformation:(.*)@Chromosome:(\S+)@Strand:(\S+)@LCRpos:(\S+)#")
+    for line in inputfile:
+        line = string.strip(line)
+        match = pattern.match(line)
+        if match != None:
+            Chromosome = match.group(2)
+            LCR_pos_string = match.group(4)
+            LCR_pos_raw_array = LCR_pos_string.split("#")
+            LCR_pos_array = []
+            for element in LCR_pos_raw_array:
+                position = element.split(",")
+                LCR_pos_array.append(position)
+
+            LCR_SNP = []
+        
+            for pos in LCR_pos_array:
+                if pos[0] in SNP[chromosome]:
+                    LCR_SNP.append(pos)
+                else:
+                    continue
+            LCR_SNP_string = ""
+            for element in LCR_SNP:
+                LCR_SNP_string += element[0] + "," + element[1] + "," + element[2] + "," + element[3] + "#"
+            length += len(LCR_SNP)
+            print "count:" + str(cnt)
+            cnt += 1
+            print LCR_SNP
+    print length
+

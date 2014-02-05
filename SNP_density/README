@@ -1,0 +1,12 @@
+Count.py is used for count how many genes are in total and how many genes have the LCR and how many genes do not own LCR.
+#3 functions:
+all_genes() : is to count the total number and return all the names of the genes as an array
+LCR_genes() : is to count the number of genes that do possess LCR
+not_own_LCR_genes(): is to count the number of genes that do not possess LCR
+#information:
+for human genome, I take 19965 genes into consideration and genes that possess LCR has a number of 4485 which makes 15480 genes do not possess LCR
+
+extract_SNP.py is used to extract all the SNPs in introns in different genes(use the genes in block_total to get the range of each intron) becareful that the intron range do contain the boundary.
+
+
+

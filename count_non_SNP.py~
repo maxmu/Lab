@@ -1,0 +1,11 @@
+import re
+import string
+import os
+
+inputfile = open("/home/xiaoyu/protein/all_gene/result/non_LII_with_SNP/Homo.non_LII_with_SNP", "r")
+pattern = re.compile(">(\S+)@nonLII_with_SNP:(\S+),#")
+for line in inputfile:
+    line = string.strip(line)
+    match = pattern.match(line)
+    if match != None:
+        print line
