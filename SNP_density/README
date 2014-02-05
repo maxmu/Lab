@@ -8,5 +8,5 @@ for human genome, I take 19965 genes into consideration and genes that possess L
 
 extract_SNP.py is used to extract all the SNPs in introns in different genes(use the genes in block_total to get the range of each intron) becareful that the intron range do contain the boundary.
 
-
+construct_geneclass(gene), receive one name of the gene and construct the class of the gene.
 
